@@ -4,12 +4,14 @@ import { initGlobe } from "./globe.js";
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
+const API_ORIGIN = "https://vitrine-xpartner.contatodroppfy.workers.dev";
+
 const API_BASE = (() => {
   const host = location.hostname;
-  if (host === "vitrine.droppfy.com" || host.endsWith(".workers.dev") || host === "localhost" || host === "127.0.0.1") {
+  if (host.endsWith(".workers.dev") || host === "localhost" || host === "127.0.0.1") {
     return "";
   }
-  return "https://vitrine.droppfy.com";
+  return API_ORIGIN;
 })();
 
 const state = {

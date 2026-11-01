@@ -1,8 +1,8 @@
 export const SITE = {
   name: "Vitrine xPartner",
   brand: "xPartner",
-  domain: "vitrine.droppfy.com",
-  origin: "https://vitrine.droppfy.com",
+  domain: "droppfy.com",
+  origin: "https://droppfy.com",
   whatsapp: "5541996670253",
   whatsappMessage: "Olá! Vim pela Vitrine xPartner e quero uma indicação de oportunidade.",
 };

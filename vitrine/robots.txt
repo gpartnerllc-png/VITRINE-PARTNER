@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vitrine.droppfy.com/sitemap.xml
+Sitemap: https://droppfy.com/sitemap.xml

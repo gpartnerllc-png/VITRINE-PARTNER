@@ -65,7 +65,7 @@ function securityHeaders(pathname) {
     "font-src 'self'",
     "style-src 'self' 'unsafe-inline'",
     "script-src 'self' 'sha256-" + CSP_HASH + "'",
-    "connect-src 'self' https://vitrine.droppfy.com",
+    "connect-src 'self' https://droppfy.com https://www.droppfy.com https://vitrine-xpartner.contatodroppfy.workers.dev",
     "frame-ancestors 'none'",
     "upgrade-insecure-requests",
   ].join("; ");

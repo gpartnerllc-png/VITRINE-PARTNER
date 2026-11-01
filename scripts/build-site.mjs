@@ -8,6 +8,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = path.join(ROOT, "vitrine");
 const YEAR = new Date().getFullYear();
 const ORIGIN = SITE.origin;
+const API_ORIGIN = "https://vitrine-xpartner.contatodroppfy.workers.dev";
 const WHATSAPP = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMessage)}`;
 
 const esc = (value) =>
@@ -135,7 +136,7 @@ function cspFor(hash) {
     "font-src 'self'",
     "style-src 'self' 'unsafe-inline'",
     `script-src 'self' 'sha256-${hash}'`,
-    `connect-src 'self' ${ORIGIN}`,
+    `connect-src 'self' ${ORIGIN} ${API_ORIGIN}`,
     "frame-ancestors 'none'",
     "upgrade-insecure-requests",
   ].join("; ");
@@ -238,7 +239,7 @@ const simplePage = ({ title, description, body, canonical }) => `<!DOCTYPE html>
 <body>
 <div class="ambient" aria-hidden="true"></div>
 ${body}
-<footer class="site-footer"><div class="container"><div class="footer-bottom" style="margin-top:0;border-top:0"><span>© ${YEAR} Vitrine xPartner</span><a href="./">vitrine.droppfy.com</a></div></div></footer>
+<footer class="site-footer"><div class="container"><div class="footer-bottom" style="margin-top:0;border-top:0"><span>© ${YEAR} Vitrine xPartner</span><a href="./">${SITE.domain}</a></div></div></footer>
 </body>
 </html>`;
 
