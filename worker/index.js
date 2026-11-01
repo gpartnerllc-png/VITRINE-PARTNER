@@ -494,7 +494,12 @@ async function handleConfig(env) {
 }
 
 async function handleHealth(env) {
-  const checks = { d1: false, kv: false, ai: Boolean(env.AI) };
+  const checks = {
+    d1: false,
+    kv: false,
+    ai: Boolean(env.AI),
+    telegram: Boolean(env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID),
+  };
   try {
     await env.DB.prepare("SELECT 1").first();
     checks.d1 = true;
