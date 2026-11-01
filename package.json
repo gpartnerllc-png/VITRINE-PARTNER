@@ -1,0 +1,16 @@
+{
+  "name": "vitrine-xpartner",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Vitrine xPartner — vitrine de oportunidades com leads validados, Cloudflare Workers, D1, KV e Workers AI.",
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "dev": "wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "check": "node scripts/check-catalog.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  }
+}

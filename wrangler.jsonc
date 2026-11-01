@@ -1,0 +1,44 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vitrine-xpartner",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "./vitrine",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/", "/index.html"],
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    {
+      "pattern": "vitrine.droppfy.com",
+      "custom_domain": true
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vitrine-xpartner-db",
+      "database_id": "cf234155-5240-49ea-8daf-2c0a70ce0b16",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "3145b8d284724e5ba2ac9c93fc54579d"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "vars": {
+    "ENVIRONMENT": "production",
+    "SITE_ORIGIN": "https://vitrine.droppfy.com",
+    "ALLOWED_ORIGINS": "https://vitrine.droppfy.com,https://droppfy.com,https://www.droppfy.com,https://gpartnerllc-png.github.io,http://localhost:8788,http://127.0.0.1:8788,http://localhost:8787,http://127.0.0.1:8787"
+  }
+}
