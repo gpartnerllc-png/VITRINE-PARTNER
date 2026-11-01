@@ -300,7 +300,7 @@ await fs.writeFile(
 
 await fs.writeFile(
   path.join(OUT, "robots.txt"),
-  `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`,
+  `User-agent: *\nAllow: /\nDisallow: /vitrine/\nDisallow: /site/\nDisallow: /scripts/\nDisallow: /worker/\nDisallow: /migrations/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`,
   "utf8",
 );
 

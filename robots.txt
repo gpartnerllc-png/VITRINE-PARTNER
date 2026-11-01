@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /vitrine/
+Disallow: /site/
+Disallow: /scripts/
+Disallow: /worker/
+Disallow: /migrations/
 
 Sitemap: https://droppfy.com/sitemap.xml
