@@ -22,7 +22,12 @@ const VALID_DDD = new Set([
 ]);
 
 const EVENT_TYPES = new Set(["page_view", "product_view", "lead_open", "lead_submit", "offer_click", "ai_query"]);
-const AI_MODELS = ["@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/meta/llama-3.2-3b-instruct"];
+const AI_MODELS = [
+  "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  "@cf/meta/llama-3.1-8b-instruct",
+  "@cf/meta/llama-3.2-3b-instruct",
+];
+const AI_CACHE_TTL = 604800;
 
 const JSON_CT = "application/json; charset=utf-8";
 
@@ -395,6 +400,38 @@ function catalogContext() {
   ).join("\n");
 }
 
+const stripAccents = (value) =>
+  String(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+const aiCacheKey = async (question) =>
+  `ai:${(await sha256(stripAccents(question).replace(/\s+/g, " ").trim())).slice(0, 40)}`;
+
+function keywordAnswer(question) {
+  const stop = new Set(["para", "com", "que", "uma", "meu", "minha", "quero", "preciso", "como", "mais", "dos", "das", "por", "sem", "sobre"]);
+  const tokens = stripAccents(question)
+    .split(/[^a-z0-9]+/)
+    .filter((token) => token.length >= 3 && !stop.has(token));
+  if (!tokens.length) return null;
+
+  const scored = CATALOG.map((product) => {
+    const haystack = stripAccents(
+      `${product.name} ${product.tagline} ${product.desc} ${product.categoryLabel} ${product.tags.join(" ")}`,
+    );
+    const score = tokens.reduce((sum, token) => sum + (haystack.includes(token) ? 1 : 0), 0);
+    return { product, score };
+  })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+
+  if (!scored.length) return null;
+  const names = scored.map((item) => item.product.name);
+  return {
+    answer: `Encontrei ${names.length === 1 ? "esta oportunidade" : "estas oportunidades"} no catálogo: ${names.join(", ")}. Abra o atalho para ver os detalhes e o acesso oficial.`,
+    matches: scored.map((item) => item.product.id),
+  };
+}
+
 async function handleAi(request, env) {
   if (!env.AI) throw new HttpError(503, "Consultor indisponível no momento.");
   const body = await readJson(request, 2048);
@@ -405,6 +442,12 @@ async function handleAi(request, env) {
   const ipHash = (await sha256(`${ip}:${env.IP_SALT || "vitrine-xpartner"}`)).slice(0, 32);
   const allowed = await hit(env, `rl:ai:${ipHash}`, 40, 86400);
   if (!allowed) throw new HttpError(429, "Limite diário do consultor atingido. Explore as categorias no catálogo.");
+
+  const cacheKey = await aiCacheKey(question);
+  const cached = await env.KV.get(cacheKey, "json");
+  if (cached?.answer) {
+    return json({ ok: true, answer: cached.answer, matches: cached.matches || [], cached: true });
+  }
 
   const system = [
     "Você é o consultor da Vitrine xPartner, um catálogo brasileiro de oportunidades de negócio.",
@@ -440,6 +483,8 @@ async function handleAi(request, env) {
   }
   if (!raw) {
     console.error("ai_error", lastError);
+    const fallback = keywordAnswer(question);
+    if (fallback) return json({ ok: true, ...fallback, fallback: true });
     throw new HttpError(503, "O consultor está indisponível agora. Tente novamente em instantes.");
   }
 
@@ -463,6 +508,12 @@ async function handleAi(request, env) {
     const product = findProduct(String(id));
     if (product && !valid.includes(product.id)) valid.push(product.id);
     if (valid.length === 3) break;
+  }
+
+  try {
+    await env.KV.put(cacheKey, JSON.stringify({ answer, matches: valid }), { expirationTtl: AI_CACHE_TTL });
+  } catch {
+    /* non-blocking */
   }
 
   try {
