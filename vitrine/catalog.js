@@ -651,7 +651,7 @@ const RAW = [
   },
 ];
 
-export const ASSET_VERSION = "20261101";
+export const ASSET_VERSION = "20261102";
 
 export const CATALOG = RAW.map((p, index) => {
   const cat = CATEGORIES.find((c) => c.id === p.category) || CATEGORIES[0];
