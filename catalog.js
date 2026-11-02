@@ -3,7 +3,7 @@ export const SITE = {
   brand: "xPartner",
   domain: "droppfy.com",
   origin: "https://droppfy.com",
-  whatsapp: "5541996670253",
+  whatsapp: "5561983446343",
   whatsappMessage: "Olá! Vim pela Vitrine xPartner e quero uma indicação de oportunidade.",
 };
 
@@ -33,6 +33,17 @@ const RAW = [
     badges: ["Oficial"],
     featured: true,
     offers: [o("Acessar plataforma", "https://log.droppfy.com/", "Cotação, etiquetas e rastreio")],
+  },
+  {
+    id: "central-rede",
+    name: "Central Rede",
+    category: "logistica",
+    tagline: "A rede neural que liga o preço do atacado à sua porta.",
+    desc: "Mercado local inteligente que consulta ao vivo os catálogos das maiores redes de supermercado, em vez de um único estoque. Entrega com entregadores locais, 96% do frete no PIX, rotas com IA e, em breve, drones de última milha.",
+    tags: ["atacado", "mercado local", "supermercado", "entrega", "ia", "drone", "pix"],
+    badges: ["Ecossistema"],
+    featured: true,
+    offers: [o("Conhecer a Central Rede", "https://centralrede.com/", "Mercado local com preço de atacado")],
   },
   {
     id: "tiny",
@@ -581,7 +592,7 @@ const RAW = [
     desc: "Atendimento direto no WhatsApp para simular consórcios e investimentos imobiliários.",
     tags: ["consórcio", "investimento", "imóvel", "whatsapp"],
     badges: ["Parceiro"],
-    offers: [o("Falar no WhatsApp", "https://wa.me/5541996670253", "Atendimento ADEMICON")],
+    offers: [o("Falar no WhatsApp", "https://wa.me/5561983446343?text=Ol%C3%A1!%20Quero%20simular%20um%20cons%C3%B3rcio%20com%20a%20ADEMICON.", "Atendimento ADEMICON")],
   },
   {
     id: "ademicon-emprestimo",
@@ -591,7 +602,7 @@ const RAW = [
     desc: "Atendimento direto no WhatsApp para condições de empréstimo com cota de consórcio como garantia.",
     tags: ["empréstimo", "consórcio", "garantia", "whatsapp"],
     badges: ["Parceiro"],
-    offers: [o("Falar no WhatsApp", "https://wa.me/556183446343", "Atendimento ADEMICON")],
+    offers: [o("Falar no WhatsApp", "https://wa.me/5561983446343?text=Ol%C3%A1!%20Quero%20simular%20um%20empr%C3%A9stimo%20com%20cota%20de%20cons%C3%B3rcio.", "Atendimento ADEMICON")],
   },
   {
     id: "xpartner-cameras",
