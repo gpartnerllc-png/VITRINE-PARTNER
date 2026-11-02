@@ -35,6 +35,17 @@ const RAW = [
     offers: [o("Acessar plataforma", "https://log.droppfy.com/", "Cotação, etiquetas e rastreio")],
   },
   {
+    id: "central-rede",
+    name: "Central Rede",
+    category: "logistica",
+    tagline: "Mercado local inteligente com preço de atacado na sua porta.",
+    desc: "Plataforma com IA que conecta compradores e fornecedores locais, levando preço de atacado e entrega regional para Brasília-DF, Águas Lindas-GO e Maracaí-SP.",
+    tags: ["atacado", "mercado local", "entrega", "ia", "brasília", "águas lindas", "maraçaí"],
+    badges: ["Ecossistema"],
+    featured: true,
+    offers: [o("Conhecer a Central Rede", "https://centralrede.com/", "Mercado local com preço de atacado")],
+  },
+  {
     id: "tiny",
     name: "Olist Tiny",
     category: "logistica",
