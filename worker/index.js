@@ -446,7 +446,8 @@ async function handleAi(request, env) {
   const cacheKey = await aiCacheKey(question);
   const cached = await env.KV.get(cacheKey, "json");
   if (cached?.answer) {
-    return json({ ok: true, answer: cached.answer, matches: cached.matches || [], cached: true });
+    const matches = (cached.matches || []).filter((id) => findProduct(String(id)));
+    return json({ ok: true, answer: cached.answer, matches, cached: true });
   }
 
   const system = [
